@@ -37,10 +37,3 @@ func CreateFact(c *fiber.Ctx) error {
 
 	return ListFacts(c)
 }
-
-func ConfirmationView(c *fiber.Ctx) error {
-	return c.Render("confirmation", fiber.Map{
-		"Title":    "Fact added successfully",
-		"Subtitle": "Add more wonderful facts to the list!",
-	})
-}
