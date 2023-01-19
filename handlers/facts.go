@@ -69,6 +69,22 @@ func EditFact(c *fiber.Ctx) error {
 	})
 }
 
+func UpdateFact(c *fiber.Ctx) error {
+	fact := new(models.Fact)
+	id := c.Params("id")
+
+	if err := c.BodyParser(fact); err != nil {
+		return c.Status(fiber.StatusServiceUnavailable).SendString(err.Error())
+	}
+
+	result := database.DB.Db.Model(&fact).Where("id = ?", id).Updates(fact)
+	if result.Error != nil {
+		return EditFact(c)
+	}
+
+	return ShowFact(c)
+}
+
 func NotFound(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusNotFound).SendFile("./public/404.html")
 }
