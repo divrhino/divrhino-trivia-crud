@@ -27,14 +27,15 @@ func NewFactView(c *fiber.Ctx) error {
 func CreateFact(c *fiber.Ctx) error {
 	fact := new(models.Fact)
 	if err := c.BodyParser(fact); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": err.Error(),
-		})
+		return NewFactView(c)
 	}
 
-	database.DB.Db.Create(&fact)
+	result := database.DB.Db.Create(&fact)
+	if result.Error != nil {
+		return NewFactView(c)
+	}
 
-	return ConfirmationView(c)
+	return ListFacts(c)
 }
 
 func ConfirmationView(c *fiber.Ctx) error {
