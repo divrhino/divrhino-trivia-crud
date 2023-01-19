@@ -2,12 +2,12 @@
     <form id="form-update-fact" data-factid="{{ .Fact.ID }}">
         <label for="question">
             <span>Question</span>
-            <input type="text" name="question">
+            <input type="text" name="question" value="{{ .Fact.Question }}">
         </label>
 
         <label for="answer">
             <span>Answer</span>
-            <input type="text" name="answer">
+            <input type="text" name="answer" value="{{ .Fact.Answer }}">
         </label>
 
         <input type="submit" value="Update">
