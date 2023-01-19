@@ -37,3 +37,15 @@ func CreateFact(c *fiber.Ctx) error {
 
 	return ListFacts(c)
 }
+
+func ShowFact(c *fiber.Ctx) error {
+	fact := models.Fact{}
+	id := c.Params("id")
+
+	database.DB.Db.Where("id = ?", id).First(&fact)
+
+	return c.Render("show", fiber.Map{
+		"Title": "Single Fact",
+		"Fact":  fact,
+	})
+}
