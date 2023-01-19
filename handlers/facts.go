@@ -53,6 +53,22 @@ func ShowFact(c *fiber.Ctx) error {
 	})
 }
 
+func EditFact(c *fiber.Ctx) error {
+	fact := models.Fact{}
+	id := c.Params("id")
+
+	result := database.DB.Db.Where("id = ?", id).First(&fact)
+	if result.Error != nil {
+		return NotFound(c)
+	}
+
+	return c.Render("edit", fiber.Map{
+		"Title":    "Edit Fact",
+		"Subtitle": "Edit your interesting fact",
+		"Fact":     fact,
+	})
+}
+
 func NotFound(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusNotFound).SendFile("./public/404.html")
 }
