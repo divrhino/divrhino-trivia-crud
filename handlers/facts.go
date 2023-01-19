@@ -42,10 +42,17 @@ func ShowFact(c *fiber.Ctx) error {
 	fact := models.Fact{}
 	id := c.Params("id")
 
-	database.DB.Db.Where("id = ?", id).First(&fact)
+	result := database.DB.Db.Where("id = ?", id).First(&fact)
+	if result.Error != nil {
+		return NotFound(c)
+	}
 
-	return c.Render("show", fiber.Map{
+	return c.Status(fiber.StatusOK).Render("show", fiber.Map{
 		"Title": "Single Fact",
 		"Fact":  fact,
 	})
+}
+
+func NotFound(c *fiber.Ctx) error {
+	return c.Status(fiber.StatusNotFound).SendFile("./public/404.html")
 }
