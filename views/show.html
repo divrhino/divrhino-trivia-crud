@@ -1,0 +1,14 @@
+<div class="container flex">
+    {{if .Fact}}
+
+    <div class="content">
+        <p>{{ .Fact.Question }}</p>
+        <p>{{ .Fact.Answer }}</p>
+    </div>
+    
+    <div class="actions">
+        <a href="" class="btn-secondary">Edit</a>
+        <button class="btn-danger">Delete</button>
+    </div>
+    {{end}}
+</div>
