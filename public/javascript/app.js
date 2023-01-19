@@ -33,4 +33,19 @@
         })
         .then(() => document.location.href=`/fact/${factToEdit}`)
     })
+
+
+
+
+    const deleteButton = document.querySelector('#delete-button')
+    const factToDelete = deleteButton && deleteButton.dataset.factid
+
+    deleteButton && deleteButton.addEventListener('click', () => {
+        const result = confirm("Are you sure you want to delete this fact?")
+        
+        if (!result) return
+
+        return fetch(`/fact/${factToDelete}`, { method: 'DELETE' })
+                .then(() => document.location.href="/")
+    })
 })()

@@ -85,6 +85,18 @@ func UpdateFact(c *fiber.Ctx) error {
 	return ShowFact(c)
 }
 
+func DeleteFact(c *fiber.Ctx) error {
+	fact := models.Fact{}
+	id := c.Params("id")
+
+	result := database.DB.Db.Where("id = ?", id).Delete(&fact)
+	if result.Error != nil {
+		return NotFound(c)
+	}
+
+	return ListFacts(c)
+}
+
 func NotFound(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusNotFound).SendFile("./public/404.html")
 }
